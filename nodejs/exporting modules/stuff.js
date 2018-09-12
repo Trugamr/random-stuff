@@ -15,4 +15,4 @@ module.exports = {
 }
 
 //module.exports.adder = adder;
-//module.exports.adder = function() {};
+//module.exports.fun = function() {};
