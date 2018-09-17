@@ -1,0 +1,28 @@
+body {
+    background-color: rgb(255, 238, 241);
+    margin : 0px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    background-color: #303030;
+    height: 100px;
+    width: 100px;
+    cursor: pointer;
+    transition: ease all 0.5s;
+}
+
+.opening {
+   height: 300px;
+   width: 300px; 
+}
+
+.opened {
+    background-color: pink;
+}
