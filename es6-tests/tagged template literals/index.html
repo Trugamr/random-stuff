@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tagged template literals</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <script>
+        function highlight(strings, ...values) {
+            let str = '';
+            strings.forEach((string, i) => {
+                str += `${string} <b>${(values[i] || '')}</b>`;
+            })
+            return str;
+        }
+
+        const dog = {
+            name: "Wowi",
+            age: 2
+        }
+
+        const markup = highlight`<p>My dog's name is ${ dog.name } and he is ${ dog.age } years old.</p>`;
+
+        document.body.innerHTML = markup;
+    </script>
+</body>
+</html>
