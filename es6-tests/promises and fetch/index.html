@@ -1,27 +1,35 @@
 <html>
+
 <head>
-<title>promises and fetch</title>
+    <title>promises and fetch</title>
 </head>
+
 <body>
     <style>
         body {
             padding: 40px;
             background-color: lightblue;
         }
+
         .card {
-            height: 50px;  
+            height: 50px;
             background-color: #fff;
-            box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1); 
+            box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.1);
             width: 200px;
             border-radius: 100px;
             padding: 5px;
-            margin: 10px;         
+            margin: 10px;
+            transition: ease transform 0.15s;
+        }
+
+        .card:hover {
+            transform: translateX(10px);
         }
 
         .card img {
             float: left;
             height: inherit;
-            border-radius: inherit;   
+            border-radius: inherit;
         }
 
         .card span {
@@ -32,22 +40,28 @@
         }
     </style>
 
-    <script>
+    <script>    
+        
         let rick = fetch('https://rickandmortyapi.com/api/character/1');
         let morty = fetch('https://rickandmortyapi.com/api/character/2');
-        
+        let birdperson = fetch('https://rickandmortyapi.com/api/character/47');
+        let randomNo = Math.floor(Math.random() * 394);
+        let random = fetch('https://rickandmortyapi.com/api/character/' + randomNo);
+
+        characters = [rick, morty, birdperson];
+
         // making sure all promises are resolved
-        Promise.all([rick, morty])
+        Promise.all([...characters, random])
             .then(responses => {
-                return Promise.all(responses.map(res => res.json()));              
+                return Promise.all(responses.map(res => res.json()));
             })
             .then(results => {
                 results.forEach((result) => {
                     console.log(result);
                     document.body.innerHTML += `
                     <div class="card">
-                        <img src="${result.image}" alt="avatar">
-                        <span>${result.name}</span>
+                        <img src="${ result.image }" alt="avatar">
+                        <span>${ result.name }</span>
                     </div>
                     `;
                 })
@@ -55,4 +69,5 @@
             .catch(err => { console.err(err) });
     </script>
 </body>
+
 </html>
