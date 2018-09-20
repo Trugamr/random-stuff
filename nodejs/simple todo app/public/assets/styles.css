@@ -1,0 +1,66 @@
+body {
+    background-color: #14161e;
+    display: grid;
+    justify-content: center;
+    font-family: Montserrat;
+    grid-template-columns: 94%;
+}
+
+p {
+    display: block;
+    color: white;
+    font-size: 25px;
+}
+
+#todo-table {
+    height: auto;
+    background-color: #494c59;
+    padding: 10px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 70% auto;
+    grid-column-gap: 0px;
+    height: 50px;    
+}
+
+form input {
+    background-color: #2d303d;
+    border: none;
+    outline: none;
+    color: #ffffff;
+    padding: 10px;
+    font-family: Montserrat;
+}
+
+
+form button {
+    background-color: #1c1e27;
+    color: white;
+    border: none;
+    font-family: Montserrat;
+    cursor: pointer;
+}
+
+ul {
+    padding: 0px;
+    list-style: none;
+}
+
+li {
+    margin-bottom: 7px;
+    height: 24px;;
+    line-height: 24px;
+    padding: 10px;
+    color: white;
+    font-size: 16px;
+    transition: ease all 0.15s;
+}
+
+ul li:hover {
+    background-color: #1c1e27;
+    text-decoration: line-through;
+    cursor: pointer;
+    padding-left: 20px;
+}
