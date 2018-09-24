@@ -4,18 +4,12 @@ const dbree = require('./dbree');
 //     .then(data => { console.log(data) })
 //     .catch(err => { console.log(Error(err)) });
 
-dbree.search('Chainsmokers')
+// m4a only
+const types = ['MPEG-4 Audio'];
+
+
+dbree.searchInfo('Starlight Jai', types)
     .then(data => {
-        data.results.forEach(result => {
-            dbree.getInfo(result)
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(err => {
-                    console.error(Error(err));
-                })
-        });
+        console.log(data);
     })
-    .catch(err => {
-        console.error(Error(err));
-    })
+    .catch(err => { console.error(Error(err)) });
