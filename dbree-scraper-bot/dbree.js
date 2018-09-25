@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const GoogleSearch = require('google-searcher');
+const $ = require('jquery');
 
 const types = ['MPEG-4 Audio', 'MPEG Audio', 'MP3 Audio', 'FLAC Audio'];
 
@@ -68,6 +69,9 @@ function searchInfo(query, formats = types) {
                     .then(data => data.filter(item => formats.includes(item.type) ))
                     .then(data => {
                         resolve(data);
+                    })
+                    .catch(err => {
+                        reject(Error(err));
                     })
              })
              .catch(err => {

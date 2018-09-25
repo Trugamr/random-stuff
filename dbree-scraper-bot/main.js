@@ -1,31 +1,36 @@
 const dbree = require('./dbree');
 const telegraf = require('telegraf');
 
-const bot = new telegraf('636599139:AAElV7uBEYw2t6MLKCjp2oKQS1SVGpuGMhI');
+const bot = new telegraf(process.env.TG_BOT_KEY);
 
 // const types = ['MPEG-4 Audio', 'MPEG Audio', 'MP3 Audio', 'FLAC Audio'];
 const types = ['MPEG-4 Audio'];
 
+
+//https://stackoverflow.com/questions/5796718/html-entity-decode
+dbree.getInfo('https://dbr.ee/AM3P')
+    .then(data=> { console.log(data)})
+    .catch(err => {console.log(err)});
+
 bot.start(ctx => { ctx.reply('Sup...') });
 bot.command('ping', ctx => { ctx.reply('pong :/')});
 bot.on('inline_query', ctx => {
-    console.log(ctx.from.username, ctx.inlineQuery.query);
+    console.log(ctx.from.username, ":", ctx.inlineQuery.query);
     dbree.searchInfo(ctx.inlineQuery.query, types)
-    .then(data => data.map(music => (
+    .then(data => data.map((music, index) => (
         {
             type: 'article',
-            id: music.url.split('/')[3].substr(0,4),
+            id: index,
             title: music.name,
             input_message_content: { message_text: music.url },
             url: 'https://dbr.ee/VZpl',
             hide_url: true,
-            description: `by ${music.artist} (${music.year})`,
+            description: `by ${music.artist} (${music.year}) | ${music.size} (${music.bitrate}kbps)`,
             thumb_url: music.art
         }
     )))
     .then(result => {
         ctx.answerInlineQuery(result);
-        console.log(result);
     })
     .catch(err => { console.error(Error(err)) });    
 })
