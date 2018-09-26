@@ -1,7 +1,7 @@
 const fetch = require('node-fetch');
 const cheerio = require('cheerio');
 const GoogleSearch = require('google-searcher');
-const $ = require('jquery');
+const he = require('he');
 
 const types = ['MPEG-4 Audio', 'MPEG Audio', 'MP3 Audio', 'FLAC Audio'];
 
@@ -12,15 +12,31 @@ function getInfo(url) {
         .then(data => data.text())
         .then(data => {
             const $ = cheerio.load(data);
+
+            let decodedName = $('.dd-song-name').html() ? he.decode($('.dd-song-name').html()) : 'NA';            
+
+            let decodedArtist = $('.dd-artist').html() ? he.decode( $('.dd-artist').html()) : 'NA';
+            
+            let decodedAlbum = $('.dd-album').html() ? he.decode($('.dd-album').html()) : 'NA';
+            
+            let decodedGenre = $('.dd-genre').html() ? he.decode($('.dd-genre').html()) : 'NA';
+
+            let artUrl = $('.img--cover-art').attr('src');
+            if(artUrl) {
+                var fullArtUrl = artUrl.substr(0, 7) == '/assets' ? 'https://dbr.ee' + artUrl : artUrl;
+            } else {
+                artUrl = 'https://trugamr.github.io/resources/images/art_0.jpg'
+            }
+                console.log(fullArtUrl);
             const musicInfo = {
                 url,
-                art: $('.img--cover-art').attr('src'),
-                name: $('.dd-song-name').html(),  
-                artist: $('.dd-artist').html(),  
-                album: $('.dd-album').html(),  
+                art: fullArtUrl,
+                name: decodedName,  
+                artist: decodedArtist,  
+                album: decodedAlbum,  
                 year: $('.dd-year').html(),
                 trackNo: $('.dd-track-number').html(),
-                genre: $('.dd-genre').html(),                    
+                genre: decodedGenre,                    
                 bitrate: $('.dd-bit-rate').html(),                    
                 size: $('.dd-size').html(),                   
                 length: $('.dd-length').html(),                   
@@ -28,7 +44,6 @@ function getInfo(url) {
                 type: $('.dd-type').html(),
                 channels: $('.dd-channels').html()
             }
-            const type = $('.dd-type').html();
             resolve(musicInfo);
         })
         .catch(err => {
