@@ -5,6 +5,7 @@ const bot = new telegraf(process.env.TG_BOT_KEY);
 
 const types = ['MPEG-4 Audio', 'MPEG Audio', 'MP3 Audio', 'FLAC Audio'];
 
+//causing erorr -  dont let me down daya
 
 bot.start(ctx => { ctx.reply('Sup...') });
 bot.command('ping', ctx => { ctx.reply('pong :/')});
@@ -17,15 +18,23 @@ bot.on('inline_query', ctx => {
             type: 'article',
             id: index,
             title: music.name,
-            input_message_content: { message_text: music.url },
+            // input_message_content: { message_text: music.url },
+            input_message_content: {
+                message_text: `*${music.name}* (${music.year})
+_by ${music.artist}_
+${music.album}
+${music.type} | ${music.size} | ${music.bitrate}kbps
+[Download](${music.url})`,
+                parse_mode: 'markdown',
+                disable_web_page_preview: false
+            },
             url: music.url,
             hide_url: true,
-            description: `by ${music.artist} (${music.year}) | ${music.size} (${music.bitrate}kbps)`,
+            description: `by ${music.artist} (${music.year}) | ${music.size} (${music.bitrate}kbps) | ${music.type}`,
             thumb_url: music.art
         }
     )))
     .then(result => {
-        console.log(result);
         ctx.answerInlineQuery(result)
     })
     .catch(err => { console.error(Error(err)) });    

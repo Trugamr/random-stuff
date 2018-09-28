@@ -27,7 +27,6 @@ function getInfo(url) {
             } else {
                 artUrl = 'https://trugamr.github.io/resources/images/art_0.jpg'
             }
-                console.log(fullArtUrl);
             const musicInfo = {
                 url,
                 art: fullArtUrl,
@@ -47,7 +46,6 @@ function getInfo(url) {
             resolve(musicInfo);
         })
         .catch(err => {
-            console.log(Error(err));
             reject(Error(err));
         });
     })
